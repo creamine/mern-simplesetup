@@ -2,8 +2,10 @@
 
 import path from "path";
 import express from "express"; // Import express module
+import { MongoClient } from "mongodb"; // Import the MongoDB Client
 import template from "./../template"; // Path to our app entry
-import devBundle from "./devBundle"; //comment out before building for production
+import devBundle from "./devBundle"; // comment out before building for production
+import { mongoAtlas } from "./mongoAtlasCreds"; // A simple javascript file exporting the credentials object mongoAtlas = {username: ..}
 
 const app = express(); // initialize an express app to build out the rest of the Node server app
 devBundle.compile(app); //comment out before building for production
@@ -29,3 +31,16 @@ app.listen(port, function onStart(err) {
 // With this code, when the server is running, it will be able to accept requests
 // at the root route and render the React view with the "Hello World" text in the browser.
 // The only part missing from this full-stack implementation is a connection to the database, which we will add below:
+// Database Connection URL
+const url =
+  process.env.MONGODB_URI ||
+  `mongodb+srv://${mongoAtlas.username}:${mongoAtlas.password}@${mongoAtlas.server}/${mongoAtlas.db}`;
+// Use connect method to connect to the server
+MongoClient.connect(
+  url,
+  { useNewUrlParser: true, useUnifiedTopology: true },
+  (err, db) => {
+    console.log("Connected successfully to mongodb server");
+    db.close();
+  }
+);
