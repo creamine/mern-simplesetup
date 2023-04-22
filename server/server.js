@@ -4,11 +4,11 @@ import path from "path";
 import express from "express"; // Import express module
 import { MongoClient } from "mongodb"; // Import the MongoDB Client
 import template from "./../template"; // Path to our app entry
-import devBundle from "./devBundle"; // comment out before building for production
+//import devBundle from "./devBundle"; // comment out before building for production
 import { mongoAtlas } from "./mongoAtlasCreds"; // A simple javascript file exporting the credentials object mongoAtlas = {username: ..}
 
 const app = express(); // initialize an express app to build out the rest of the Node server app
-devBundle.compile(app); //comment out before building for production
+//devBundle.compile(app); //comment out before building for production
 
 // The folloing will configure the Express app to return static files from the dist folder when the requested route starts with /dist.
 const CURRENT_WORKING_DIR = process.cwd();
